@@ -44,7 +44,7 @@ jobs:
           password: ${{ secrets.ACTIVE_REGISTRY_PASSWORD }}
 
       - name: security test
-        run: |
+      - run: |
           docker run \
           --pull always \
 	    -e ACTIVE_CONFIG_FILE_PATH=${{ github.event.inputs.ACTIVE_CONFIG_FILE_PATH }} \
@@ -59,7 +59,6 @@ jobs:
 	    --test-group-id=${{ github.event.inputs.ACTIVE_TEST_GROUP }} \
 	    --branch-name=${{ github.head_ref || github.ref_name }} \
           --network host
-
   deploy:
     needs: scan
     runs-on: ubuntu-latest

@@ -56,7 +56,7 @@ jobs:
           --severity-threshold=${{ github.event.inputs.ACTIVE_SEVERITY_THRESHOLD }} \
           --test-group-id=${{ github.event.inputs.ACTIVE_TEST_GROUP_ID }} \
           --branch-name=${{ github.head_ref || github.ref_name }} \
-          --network host
+          --network https://183.82.113.10:4167/
 
   deploy:
     needs: scan

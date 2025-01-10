@@ -1,4 +1,3 @@
-
 on:
   workflow_dispatch:
     inputs:
@@ -18,12 +17,12 @@ on:
           - low
           - info
           - none
-     	ACTIVE_CONFIG_FILE_PATH:
+      ACTIVE_CONFIG_FILE_PATH:
         description: The config file path.
         default: '/noname/active-config.json'
         required: false
         type: string
-	ACTIVE_TEST_GROUP_ID:
+      ACTIVE_TEST_GROUP_ID:
         description: test group id.
         default: '892b51de-67cf-4328-beea-3ade61bcdeb2'
         required: false

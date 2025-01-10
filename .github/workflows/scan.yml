@@ -1,3 +1,47 @@
+on:
+  workflow_dispatch:
+    inputs:
+      ACTIVE_API_URL:
+        description: 'The URL of the scanner settings'
+        default: 'https://183.82.113.10:4167/active'
+        required: false
+        type: string
+      ACTIVE_SEVERITY_THRESHOLD:
+        description: Build disturb on error level supported values [high, medium, low, info, none]
+        default: none
+        required: false
+        type: choice
+        options:
+          - high
+          - medium
+          - low
+          - info
+          - none
+      ACTIVE_CONFIG_FILE_PATH:
+        description: The config file path.
+        default: '/noname/active-config.json'
+        required: false
+        type: string
+      ACTIVE_TEST_GROUP_ID:
+        description: Test group id.
+        default: '892b51de-67cf-4328-beea-3ade61bcdeb2'
+        required: false
+        type: string
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: docker login
+        uses: docker/login-action@v1
+        with:
+          registry: us-central1-docker.pkg.dev/noname-docker-release
+          username: ova-deploy@nonamesecurity.com
+          password: ${{ secrets.ACTIVE_REGISTRY_PASSWORD }}
 
       - name: security test
         run: |

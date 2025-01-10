@@ -7,7 +7,7 @@ on:
         required: false
         type: string
       ACTIVE_SEVERITY_THRESHOLD:
-        description: build disturb on error level supported values [high , medium, low, info, none]
+        description: Build disturb on error level supported values [high, medium, low, info, none]
         default: none
         required: false
         type: choice
@@ -23,7 +23,7 @@ on:
         required: false
         type: string
       ACTIVE_TEST_GROUP_ID:
-        description: test group id.
+        description: Test group id.
         default: '892b51de-67cf-4328-beea-3ade61bcdeb2'
         required: false
         type: string
@@ -44,21 +44,20 @@ jobs:
           password: ${{ secrets.ACTIVE_REGISTRY_PASSWORD }}
 
       - name: security test
-      - run: |
+        run: |
           docker run \
           --pull always \
-	    -e ACTIVE_CONFIG_FILE_PATH=${{ github.event.inputs.ACTIVE_CONFIG_FILE_PATH }} \
+          -e ACTIVE_CONFIG_FILE_PATH=${{ github.event.inputs.ACTIVE_CONFIG_FILE_PATH }} \
           -v $(pwd)/noname:/noname \
-
-          us-central1-docker.pkg.dev/noname-docker-release/active-cli:$(curl -k ${{github.event.inputs.ACTIVE_API_URL}}/backend/version) \
+          us-central1-docker.pkg.dev/noname-docker-release/active-cli:$(curl -k ${{ github.event.inputs.ACTIVE_API_URL }}/backend/version) \
           scan \
           --api-url=${{ github.event.inputs.ACTIVE_API_URL }} \
           --api-token=${{ secrets.ACTIVE_API_TOKEN }} \
-	    --
           --severity-threshold=${{ github.event.inputs.ACTIVE_SEVERITY_THRESHOLD }} \
-	    --test-group-id=${{ github.event.inputs.ACTIVE_TEST_GROUP }} \
-	    --branch-name=${{ github.head_ref || github.ref_name }} \
+          --test-group-id=${{ github.event.inputs.ACTIVE_TEST_GROUP_ID }} \
+          --branch-name=${{ github.head_ref || github.ref_name }} \
           --network host
+
   deploy:
     needs: scan
     runs-on: ubuntu-latest
